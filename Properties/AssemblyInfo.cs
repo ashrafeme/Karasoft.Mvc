@@ -6,12 +6,12 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Karasoft.Mvc")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("a package For Ashraf Ezzat Work Hijri Data ")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Karasoft Ashraf Ezzat")]
 [assembly: AssemblyProduct("Karasoft.Mvc")]
-[assembly: AssemblyCopyright("Copyright ©  2015")]
-[assembly: AssemblyTrademark("")]
+[assembly: AssemblyCopyright("Karasoft ©  2015")]
+[assembly: AssemblyTrademark("Karasoft")]
 [assembly: AssemblyCulture("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
