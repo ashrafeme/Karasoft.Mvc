@@ -299,6 +299,8 @@ namespace Karasoft.Mvc.Extension
             return toreturn = _mobileNumber;
         }
 
+        
+
         public static bool IslengthEquel(this string value, int length)
         {
             return (value.Length == length);

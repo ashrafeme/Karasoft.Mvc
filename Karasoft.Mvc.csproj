@@ -87,6 +87,7 @@
     <Compile Include="Validations\SaudiID.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Html\_Alerts.cshtml" />
     <None Include="LICENSE.md" />
     <None Include="packages.config" />
     <None Include="README.md" />
