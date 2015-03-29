@@ -1,6 +1,7 @@
 ﻿using Karasoft.Mvc.Html;
 using System.Collections.Generic;
 using System.Web.Mvc;
+using System.Linq;
 
 namespace Karasoft.Mvc
 {
@@ -19,6 +20,12 @@ namespace Karasoft.Mvc
             }
         }
 
+        public void Success(ModelStateDictionary ModelState, bool dismissable = false)
+        {
+            var allErrors = ModelState.Values.SelectMany(v => v.Errors);
+            Success(allErrors.Select(ee => ee.ErrorMessage));
+        }
+
         public void Information(string message, bool dismissable = false)
         {
             AddAlert(AlertStyles.Information, message, dismissable);
@@ -30,6 +37,12 @@ namespace Karasoft.Mvc
             {
                 Information(string.Format("<li>{0}</li>", item), dismissable);
             }
+        }
+
+        public void Information(ModelStateDictionary ModelState, bool dismissable = false)
+        {
+            var allErrors = ModelState.Values.SelectMany(v => v.Errors);
+            Information(allErrors.Select(ee => ee.ErrorMessage));
         }
 
         public void Warning(string message, bool dismissable = false)
@@ -45,6 +58,12 @@ namespace Karasoft.Mvc
             }
         }
 
+        public void Warning(ModelStateDictionary ModelState, bool dismissable = false)
+        {
+            var allErrors = ModelState.Values.SelectMany(v => v.Errors);
+            Warning(allErrors.Select(ee => ee.ErrorMessage));
+        }
+
         public void Danger(string message, bool dismissable = false)
         {
             AddAlert(AlertStyles.Danger, message, dismissable);
@@ -57,6 +76,14 @@ namespace Karasoft.Mvc
                 Danger(string.Format("<li>{0}</li>", item), dismissable);
             }
         }
+
+        public void Danger(ModelStateDictionary ModelState, bool dismissable = false)
+        {
+            var allErrors = ModelState.Values.SelectMany(v => v.Errors);
+            Danger(allErrors.Select(ee => ee.ErrorMessage));
+        }
+
+        
 
         private void AddAlert(string alertStyle, string message, bool dismissable)
         {

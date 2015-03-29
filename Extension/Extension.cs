@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Karasoft.Mvc.Utilities;
+using System;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -240,6 +241,25 @@ namespace Karasoft.Mvc.Extension
         {
             return Karasoft.Mvc.Utilities.DateUtility.ConvertToHijriDate(odate, format);
         }
+
+        public static Age ToArabicAge(this DateTime odate, DateTime todate)
+        {
+            return Karasoft.Mvc.Utilities.DateUtility.FormatAgeAr(odate, todate);
+        }
+
+        public static Age ToArabicAge(this DateTime odate)
+        {
+            return Karasoft.Mvc.Utilities.DateUtility.FormatAgeAr(odate, DateTime.Now);
+        }
+
+        public static Age ToAge(this DateTime odate)
+        {
+            return Karasoft.Mvc.Utilities.DateUtility.FormatAge(odate, DateTime.Now);
+        }
+        public static Age ToAge(this DateTime odate, DateTime todate)
+        {
+            return Karasoft.Mvc.Utilities.DateUtility.FormatAge(odate, todate);
+        }
         public static string ToHijriDate(this DateTime odate)
         {
             return Karasoft.Mvc.Utilities.DateUtility.ConvertToHijriDate(odate);
@@ -248,6 +268,20 @@ namespace Karasoft.Mvc.Extension
         public static string ToHijriDate(this DateTime? odate, string format)
         {
             return Karasoft.Mvc.Utilities.DateUtility.ConvertToHijriDate(odate, format);
+        }
+
+        public static int? ToHijriYear(this DateTime? odate)
+        {
+            if (odate.HasValue)
+                return Karasoft.Mvc.Utilities.DateUtility.ConvertToYearName(odate.GetValueOrDefault(DateTime.Now));
+            else return null;
+        }
+        public static string ToHijriMonth(this DateTime? odate)
+        {
+            if (odate.HasValue)
+                return Karasoft.Mvc.Utilities.DateUtility.ConvertToMonthName(odate.GetValueOrDefault(DateTime.Now));
+            else return string.Empty;
+
         }
         public static string ToHijriDate(this DateTime? odate)
         {

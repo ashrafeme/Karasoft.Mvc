@@ -49,9 +49,13 @@ namespace Karasoft.Mvc.Extension
             var selectedyear = string.Empty;
             if (value.HasValue)
             {
-                selectedday = cal.GetDayOfMonth(value.Value).ToString();
-                selectedmonth = cal.GetMonth(value.Value).ToString();
-                selectedyear = cal.GetYear(value.Value).ToString();
+                if (value.Value > cal.MinSupportedDateTime && value.Value < cal.MaxSupportedDateTime)
+                {
+                    selectedday = cal.GetDayOfMonth(value.Value).ToString();
+
+                    selectedmonth = cal.GetMonth(value.Value).ToString();
+                    selectedyear = cal.GetYear(value.Value).ToString();
+                }
             }
             var ha = HtmlHelper.AnonymousObjectToHtmlAttributes(htmlAttributes);
             TagBuilder tag = new TagBuilder("table");
