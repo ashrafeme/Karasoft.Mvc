@@ -73,7 +73,7 @@ namespace Karasoft.Mvc.Extension
             tag.MergeAttributes(htmlAttributes);
             var pr = idprefex + "_day";
             tag.Attributes.Add("id", pr);
-            tag.MergeAttribute("name", pr, true /* replaceExisting */);
+            tag.MergeAttribute("name", pr.Replace('_','.'), true /* replaceExisting */);
 
             StringBuilder listItemBuilder = new StringBuilder();
             var sle = false;
@@ -105,7 +105,7 @@ namespace Karasoft.Mvc.Extension
             tag.MergeAttributes(htmlAttributes);
             var pr = idprefex + "_month";
             tag.Attributes.Add("id", pr);
-            tag.MergeAttribute("name", pr, true /* replaceExisting */);
+            tag.MergeAttribute("name", pr.Replace('_', '.'), true /* replaceExisting */);
 
             StringBuilder listItemBuilder = new StringBuilder();
             var sle = false;
@@ -137,7 +137,7 @@ namespace Karasoft.Mvc.Extension
             tag.MergeAttributes(htmlAttributes);
             var pr = idprefex + "_year";
             tag.Attributes.Add("id", pr);
-            tag.MergeAttribute("name", pr, true /* replaceExisting */);
+            tag.MergeAttribute("name", pr.Replace('_', '.'), true /* replaceExisting */);
 
             StringBuilder listItemBuilder = new StringBuilder();
             var sle = false;
@@ -190,9 +190,9 @@ namespace Karasoft.Mvc.Extension
         public static DateTime? GetDateFromHijriControl(NameValueCollection form, string modelrpopname)
         {
             DateTime? toreturn = null;
-            var day = form[modelrpopname + "_day"];
-            var month = form[modelrpopname + "_month"];
-            var year = form[modelrpopname + "_year"];
+            var day = form[modelrpopname + ".day"];
+            var month = form[modelrpopname + ".month"];
+            var year = form[modelrpopname + ".year"];
             if (year.ToInt() > 0 && month.ToInt() > 0 && day.ToInt() > 0)
             {
                 int dayin = day.ToInt() == 0 ? 1 : day.ToInt();
