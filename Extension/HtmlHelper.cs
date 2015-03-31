@@ -208,7 +208,7 @@ namespace Karasoft.Mvc.Extension
             var data = WebCache.Get(key);
             if (data == null)
             {
-                data = value;
+                data = value; 
                 WebCache.Set(key, value);
             }
 
