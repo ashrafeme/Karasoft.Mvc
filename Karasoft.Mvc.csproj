@@ -79,6 +79,7 @@
     <Compile Include="Extension\Extension.cs" />
     <Compile Include="Extension\HtmlHelper.cs" />
     <Compile Include="Html\Alert.cs" />
+    <Compile Include="ModelBinding\HijriDateModelBinder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SMS\MobilySms.cs" />
     <Compile Include="SMS\OTP.cs" />

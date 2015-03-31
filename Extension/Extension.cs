@@ -270,6 +270,20 @@ namespace Karasoft.Mvc.Extension
             return Karasoft.Mvc.Utilities.DateUtility.ConvertToHijriDate(odate, format);
         }
 
+        public static int ToHijriYear(this DateTime odate)
+        {
+           
+                return Karasoft.Mvc.Utilities.DateUtility.ConvertToYearName(odate);
+           
+        }
+        public static string ToHijriMonth(this DateTime odate)
+        {
+            
+                return Karasoft.Mvc.Utilities.DateUtility.ConvertToMonthName(odate);
+            
+
+        }
+
         public static int? ToHijriYear(this DateTime? odate)
         {
             if (odate.HasValue)
