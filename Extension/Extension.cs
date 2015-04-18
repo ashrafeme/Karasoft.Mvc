@@ -325,7 +325,8 @@ namespace Karasoft.Mvc.Extension
         {
 
             string toreturn = string.Empty;
-
+            if (mobileNumber.IsNullOrEmpty())
+                return toreturn;
             // remove all non-numeric characters
             var _mobileNumber = CleanNumber(mobileNumber.ToEnInt());
 
