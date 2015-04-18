@@ -1,16 +1,40 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Linq.Expressions;
 using System.Text;
 using System.Web;
 using System.Web.Helpers;
 using System.Web.Mvc;
+using System.Web.Mvc.Html;
 
 namespace Karasoft.Mvc.Extension
 {
     public static class HtmlHelperExtension
     {
+
+        public static IHtmlString DropDownListWithLabelFor<TModel, TProperty>(this HtmlHelper<TModel> helper, Expression<Func<TModel, TProperty>> expression, string label, IEnumerable<SelectListItem> items, string blankOption, object htmlAttributes = null)
+        {
+            var l = new TagBuilder("label");
+            var br = new TagBuilder("br");
+
+            var metadata = ModelMetadata.FromLambdaExpression(expression, helper.ViewData);
+            var mergedAttributes = helper.GetUnobtrusiveValidationAttributes(ExpressionHelper.GetExpressionText(expression), metadata);
+
+            if (htmlAttributes != null)
+            {
+                foreach (PropertyDescriptor descriptor in TypeDescriptor.GetProperties(htmlAttributes))
+                {
+                    object value = descriptor.GetValue(htmlAttributes);
+                    mergedAttributes.Add(descriptor.Name, value);
+                }
+            }
+
+            l.InnerHtml = label + br.ToString(TagRenderMode.SelfClosing) + helper.DropDownListFor(expression, items, blankOption, mergedAttributes);
+            return MvcHtmlString.Create(l.ToString(TagRenderMode.Normal));
+        }
+
         public static MvcHtmlString UmmalQura(this HtmlHelper htmlHelper, string name, object valuedata = null, object htmlAttributes = null)
         {
             var cal = new System.Globalization.UmAlQuraCalendar();
@@ -33,8 +57,63 @@ namespace Karasoft.Mvc.Extension
 
             return new MvcHtmlString(tag.ToString());
         }
+
+        public static MvcHtmlString UmmalQuraFor<TModel, TValue>(this System.Web.Mvc.HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression,int MinYear,int MaxYear, object htmlAttributes = null)
+        {
+            var cal = new System.Globalization.UmAlQuraCalendar();
+
+           // ModelMetadata metadata = ModelMetadata.FromLambdaExpression(expression, htmlHelper.ViewData);
+           
+            var fieldName = ExpressionHelper.GetExpressionText(expression);
+
+            var fullBindingName = html.ViewContext.ViewData.TemplateInfo.GetFullHtmlFieldName(fieldName);
+            var fieldId = TagBuilder.CreateSanitizedId(fullBindingName);
+
+            var metadata = ModelMetadata.FromLambdaExpression(expression, html.ViewData);
+            var ha = HtmlHelper.AnonymousObjectToHtmlAttributes(htmlAttributes);
+            var mergedAttributes = html.GetUnobtrusiveValidationAttributes(ExpressionHelper.GetExpressionText(expression), metadata);
+            if (htmlAttributes != null)
+            {
+                foreach (PropertyDescriptor descriptor in TypeDescriptor.GetProperties(htmlAttributes))
+                {
+                    object valueff = descriptor.GetValue(htmlAttributes);
+                    mergedAttributes.Add(descriptor.Name, valueff);
+                }
+            }
+            var value = metadata.Model as DateTime?;
+
+            var selectedmonth = string.Empty;
+            var selectedday = string.Empty;
+            var selectedyear = string.Empty;
+            if (value.HasValue)
+            {
+                if (value.Value > cal.MinSupportedDateTime && value.Value < cal.MaxSupportedDateTime)
+                {
+                    selectedday = cal.GetDayOfMonth(value.Value).ToString();
+
+                    selectedmonth = cal.GetMonth(value.Value).ToString();
+                    selectedyear = cal.GetYear(value.Value).ToString();
+                }
+            }
+            
+            TagBuilder tag = new TagBuilder("table");
+            tag.InnerHtml = string.Format("<tr><td>{0}</td><td>{1}</td><td>{2}</td><td>{3}</td></tr>",
+                UmmalQuraDays(fieldId, selectedday, ha).ToString(),
+                UmmalQuraMonths(fieldId, selectedmonth, ha).ToString(),
+                UmmalQuraYears(fieldId, selectedyear, cal, MinYear, MaxYear, ha),
+                html.HiddenFor(expression,mergedAttributes));
+
+            return new MvcHtmlString(tag.ToString());
+
+        }
+
+        
         public static MvcHtmlString UmmalQuraFor<TModel, TValue>(this System.Web.Mvc.HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression, object htmlAttributes = null)
         {
+             var cal = new System.Globalization.UmAlQuraCalendar();
+             return UmmalQuraFor(html, expression, cal.GetYear(cal.MinSupportedDateTime), cal.GetYear(cal.MaxSupportedDateTime), htmlAttributes);
+
+            /*
             var cal = new System.Globalization.UmAlQuraCalendar();
             var fieldName = ExpressionHelper.GetExpressionText(expression);
 
@@ -65,6 +144,7 @@ namespace Karasoft.Mvc.Extension
                 UmmalQuraYears(fieldId, selectedyear, cal, ha));
 
             return new MvcHtmlString(tag.ToString());
+            */
         }
 
         static TagBuilder UmmalQuraDays(string idprefex, string selectedday, IDictionary<string, object> htmlAttributes)
@@ -133,6 +213,14 @@ namespace Karasoft.Mvc.Extension
         static TagBuilder UmmalQuraYears(string idprefex, string selectedyear, System.Globalization.UmAlQuraCalendar cal, IDictionary<string, object> htmlAttributes)
         {
 
+           
+
+            return UmmalQuraYears(idprefex, selectedyear, cal, cal.GetYear(cal.MinSupportedDateTime), cal.GetYear(cal.MaxSupportedDateTime), htmlAttributes);
+            
+        }
+
+        private static TagBuilder UmmalQuraYears(string idprefex, string selectedyear, System.Globalization.UmAlQuraCalendar cal, int MinYear, int MaxYear, IDictionary<string, object> htmlAttributes)
+        {
             TagBuilder tag = new TagBuilder("select");
             tag.MergeAttributes(htmlAttributes);
             var pr = idprefex + "_year";
@@ -152,7 +240,7 @@ namespace Karasoft.Mvc.Extension
                 Value = string.Empty,
                 Selected = sle
             }));
-            for (int i = cal.GetYear(cal.MinSupportedDateTime); i <= cal.GetYear(cal.MaxSupportedDateTime); i++)
+            for (int i = MinYear; i <= MaxYear; i++)
             {
                 sle = (i.ToString() == selectedyear);
                 listItemBuilder.AppendLine(ListItemToOption(new SelectListItem()

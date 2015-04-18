@@ -5,6 +5,8 @@ VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Karasoft.Mvc", "Karasoft.Mvc.csproj", "{2195890D-0B0D-42D6-98BB-C03A0C378DD6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Karaweb", "..\Karaweb\Karaweb.csproj", "{F476E97E-9029-4943-BC0E-0717A69057C9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{2195890D-0B0D-42D6-98BB-C03A0C378DD6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2195890D-0B0D-42D6-98BB-C03A0C378DD6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2195890D-0B0D-42D6-98BB-C03A0C378DD6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F476E97E-9029-4943-BC0E-0717A69057C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F476E97E-9029-4943-BC0E-0717A69057C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F476E97E-9029-4943-BC0E-0717A69057C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F476E97E-9029-4943-BC0E-0717A69057C9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
