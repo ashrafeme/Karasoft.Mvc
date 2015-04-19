@@ -21,16 +21,23 @@ namespace Karasoft.Mvc.ModelBinding
         public object BindModel(ControllerContext controllerContext, ModelBindingContext bindingContext)
         {
             DateTime? toreturn = null;
-            var day = bindingContext.ValueProvider.GetValue(bindingContext.ModelName + ".day").AttemptedValue;
-            var month = bindingContext.ValueProvider.GetValue(bindingContext.ModelName + ".month").AttemptedValue;
-            var year = bindingContext.ValueProvider.GetValue(bindingContext.ModelName + ".year").AttemptedValue;
-            if (year.ToInt() > 0 && month.ToInt() > 0 && day.ToInt() > 0)
+            if (bindingContext.ValueProvider.GetValue(bindingContext.ModelName + ".day") != null)
             {
-                int dayin = day.ToInt() == 0 ? 1 : day.ToInt();
-                int monthin = month.ToInt() == 0 ? 1 : month.ToInt();
-                toreturn = Karasoft.Mvc.Utilities.DateUtility.ConvertHijriToGregorian(dayin, monthin, year.ToInt());
+                var day = bindingContext.ValueProvider.GetValue(bindingContext.ModelName + ".day").AttemptedValue;
+                var month = bindingContext.ValueProvider.GetValue(bindingContext.ModelName + ".month").AttemptedValue;
+                var year = bindingContext.ValueProvider.GetValue(bindingContext.ModelName + ".year").AttemptedValue;
+                if (year.ToInt() > 0 && month.ToInt() > 0 && day.ToInt() > 0)
+                {
+                    int dayin = day.ToInt() == 0 ? 1 : day.ToInt();
+                    int monthin = month.ToInt() == 0 ? 1 : month.ToInt();
+                    toreturn = Karasoft.Mvc.Utilities.DateUtility.ConvertHijriToGregorian(dayin, monthin, year.ToInt());
+                }
             }
-
+            else
+            {
+                var date = bindingContext.ValueProvider.GetValue(bindingContext.ModelName).AttemptedValue;
+                toreturn = DateTime.Parse(date);
+            }
             return toreturn;
             //  var date = DateTime.Now;
 

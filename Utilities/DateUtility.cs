@@ -231,12 +231,13 @@ namespace Karasoft.Mvc.Utilities
 
         public static DateTime ConvertHijriToGregorian(int day, int month, int year)
         {
-            System.Globalization.CultureInfo _Culture = new System.Globalization.CultureInfo("ar-SA", false);
+          //  System.Globalization.CultureInfo _Culture = new System.Globalization.CultureInfo("ar-SA", false);
             var DefualtCalendar = new System.Globalization.UmAlQuraCalendar();
-            _Culture.DateTimeFormat.Calendar = DefualtCalendar;
+            return DefualtCalendar.ToDateTime(year, month, day, 0, 0, 0, 0);
+           // _Culture.DateTimeFormat.Calendar = DefualtCalendar;
             //DefualtCalendar.ToDateTime
-            DateTime tempdate = new DateTime(year, month, day, DefualtCalendar);
-            return tempdate;
+         //   DateTime tempdate = new DateTime(year, month, day, DefualtCalendar);
+          //  return tempdate;
            // return DateTime.ParseExact(tempdate.ToString("dd/MM/yyyy", new System.Globalization.CultureInfo("en-US")), _Culture.DateTimeFormat.GetAllDateTimePatterns(), new System.Globalization.CultureInfo("en-US"), System.Globalization.DateTimeStyles.AllowWhiteSpaces | System.Globalization.DateTimeStyles.AllowInnerWhite);
         }
 
