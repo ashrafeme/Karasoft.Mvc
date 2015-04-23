@@ -33,6 +33,7 @@ namespace Karasoft.Mvc.SMS
         public string SendMessage()
         {
             return SendMessage(Message);
+             //var client = new HttpClient();
         }
 
 
