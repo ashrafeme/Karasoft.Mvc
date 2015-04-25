@@ -36,7 +36,15 @@ namespace Karasoft.Mvc.ModelBinding
             else
             {
                 var date = bindingContext.ValueProvider.GetValue(bindingContext.ModelName).AttemptedValue;
-                toreturn = DateTime.Parse(date);
+                if (!date.IsNullOrEmpty())
+                {
+                    DateTime ddd;
+                    if(DateTime.TryParse(date, out ddd))
+                    {
+                        toreturn = ddd;
+                    }
+                }
+               
             }
             return toreturn;
             //  var date = DateTime.Now;
