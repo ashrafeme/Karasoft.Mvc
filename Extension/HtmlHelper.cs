@@ -38,6 +38,7 @@ namespace Karasoft.Mvc.Extension
         public static MvcHtmlString UmmalQura(this HtmlHelper htmlHelper, string name, object valuedata = null, object htmlAttributes = null)
         {
             var cal = new System.Globalization.UmAlQuraCalendar();
+            UmmalQuraHtmlHelper oUQHH = new UmmalQuraHtmlHelper();
             var selectedmonth = string.Empty;
             var selectedday = string.Empty;
             var selectedyear = string.Empty;
@@ -51,9 +52,9 @@ namespace Karasoft.Mvc.Extension
             var ha = HtmlHelper.AnonymousObjectToHtmlAttributes(htmlAttributes);
             TagBuilder tag = new TagBuilder("table");
             tag.InnerHtml = string.Format("<tr><td>{0}</td><td>{1}</td><td>{2}</td></tr>",
-                UmmalQuraDays(name, selectedday, ha).ToString(),
-                UmmalQuraMonths(name, selectedmonth, ha).ToString(),
-                UmmalQuraYears(name, selectedyear, cal, ha));
+              oUQHH.UmmalQuraDays(name, selectedday, ha).ToString(),
+                oUQHH.UmmalQuraMonths(name, selectedmonth, ha).ToString(),
+                oUQHH.UmmalQuraYears(name, selectedyear, cal, ha));
 
             return new MvcHtmlString(tag.ToString());
         }
@@ -65,7 +66,7 @@ namespace Karasoft.Mvc.Extension
            // ModelMetadata metadata = ModelMetadata.FromLambdaExpression(expression, htmlHelper.ViewData);
            
             var fieldName = ExpressionHelper.GetExpressionText(expression);
-
+            UmmalQuraHtmlHelper oUQHH = new UmmalQuraHtmlHelper();
             var fullBindingName = html.ViewContext.ViewData.TemplateInfo.GetFullHtmlFieldName(fieldName);
             var fieldId = TagBuilder.CreateSanitizedId(fullBindingName);
 
@@ -98,9 +99,9 @@ namespace Karasoft.Mvc.Extension
             
             TagBuilder tag = new TagBuilder("table");
             tag.InnerHtml = string.Format("<tr><td>{0}</td><td>{1}</td><td>{2}</td><td>{3}</td></tr>",
-                UmmalQuraDays(fieldId, selectedday, ha).ToString(),
-                UmmalQuraMonths(fieldId, selectedmonth, ha).ToString(),
-                UmmalQuraYears(fieldId, selectedyear, cal, MinYear, MaxYear, ha),
+               oUQHH.UmmalQuraDays(fieldId, selectedday, ha).ToString(),
+                oUQHH.UmmalQuraMonths(fieldId, selectedmonth, ha).ToString(),
+                oUQHH.UmmalQuraYears(fieldId, selectedyear, cal, MinYear, MaxYear, ha),
                 html.HiddenFor(expression,mergedAttributes));
 
             return new MvcHtmlString(tag.ToString());
@@ -146,14 +147,14 @@ namespace Karasoft.Mvc.Extension
             return new MvcHtmlString(tag.ToString());
             */
         }
-
+        /*
         static TagBuilder UmmalQuraDays(string idprefex, string selectedday, IDictionary<string, object> htmlAttributes)
         {
             TagBuilder tag = new TagBuilder("select");
             tag.MergeAttributes(htmlAttributes);
             var pr = idprefex + "_day";
             tag.Attributes.Add("id", pr);
-            tag.MergeAttribute("name", pr.Replace('_','.'), true /* replaceExisting */);
+            tag.MergeAttribute("name", pr.Replace('_','.'), true );
 
             StringBuilder listItemBuilder = new StringBuilder();
             var sle = false;
@@ -185,7 +186,7 @@ namespace Karasoft.Mvc.Extension
             tag.MergeAttributes(htmlAttributes);
             var pr = idprefex + "_month";
             tag.Attributes.Add("id", pr);
-            tag.MergeAttribute("name", pr.Replace('_', '.'), true /* replaceExisting */);
+            tag.MergeAttribute("name", pr.Replace('_', '.'), true );
 
             StringBuilder listItemBuilder = new StringBuilder();
             var sle = false;
@@ -225,7 +226,7 @@ namespace Karasoft.Mvc.Extension
             tag.MergeAttributes(htmlAttributes);
             var pr = idprefex + "_year";
             tag.Attributes.Add("id", pr);
-            tag.MergeAttribute("name", pr.Replace('_', '.'), true /* replaceExisting */);
+            tag.MergeAttribute("name", pr.Replace('_', '.'), true );
 
             StringBuilder listItemBuilder = new StringBuilder();
             var sle = false;
@@ -274,6 +275,7 @@ namespace Karasoft.Mvc.Extension
             //}
             return builder.ToString(TagRenderMode.Normal);
         }
+        */
 
         public static DateTime? GetDateFromHijriControl(NameValueCollection form, string modelrpopname)
         {

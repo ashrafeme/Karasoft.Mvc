@@ -95,6 +95,8 @@
     <Compile Include="BaseController.cs" />
     <Compile Include="Extension\Extension.cs" />
     <Compile Include="Extension\HtmlHelper.cs" />
+    <Compile Include="Extension\UmmalQuraExtension.cs" />
+    <Compile Include="Extension\UmmalQuraHtmlHelper.cs" />
     <Compile Include="Html\Alert.cs" />
     <Compile Include="ModelBinding\HijriDateModelBinder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
